@@ -134,10 +134,10 @@ print_status() {
 
         if [ "${CHECK_STATUS[$name]}" -eq 0 ]; then
             gh set-status success "$(get_display_name $name) check passed" "$name"
-            echo "   $(get_display_name $name) check passed" >> $GITHUB_STEP_SUMMARY
+            echo "✅ $(get_display_name $name) check passed" >> $GITHUB_STEP_SUMMARY
         else
             gh set-status failure "$(get_display_name $name) check failed" "$name"
-            echo "   $(get_display_name $name) check failed" >> $GITHUB_STEP_SUMMARY
+            echo "❌ $(get_display_name $name) check failed" >> $GITHUB_STEP_SUMMARY
         fi
     fi  
 }
@@ -154,7 +154,7 @@ show_error() {
     # Be more verbose in GitHub Actions and show check output in summary
     if [ "$GITHUB_ACTION_RUN" -eq 1 ]; then
         if [ "${CHECK_STATUS[$name]}" -ne 0 ]; then
-            echo "   $(get_display_name $name) check output:" >> $GITHUB_STEP_SUMMARY
+            echo "❌ $(get_display_name $name) check output:" >> $GITHUB_STEP_SUMMARY
             cat "${CHECK_OUT[$name]}" >> $GITHUB_STEP_SUMMARY
         fi
     fi
