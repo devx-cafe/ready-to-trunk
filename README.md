@@ -19,7 +19,7 @@ Reference this action in your own workflow:
 ```yaml
 - uses: devx-cafe/ready-to-trunk@main
   with:
-    user_name: "Ready Pusher"          # required
+    user_name: "Ready Pusher" # required
     user_email: "ready-pusher@example.com" # required
     token: ${{ secrets.READY_PUSHER }} # required – PAT with contents/issues/pull-requests write
     # target_branch: main      # default: main
@@ -33,16 +33,16 @@ Reference this action in your own workflow:
 
 ## Inputs
 
-| Input | Required | Default | Description |
-|---|---|---|---|
-| `token` | ✅ | – | PAT with `contents`, `issues`, and `pull-requests` write access |
-| `user_name` | ✅ | – | Git user name for merge commits |
-| `user_email` | ✅ | – | Git user email for merge commits |
-| `target_branch` | | `main` | Branch to fast-forward merge into |
-| `delete_dev_branch` | | `true` | Delete the development branch after delivery |
-| `delete_ready_branch` | | `true` | Delete the `ready/*` branch after delivery |
-| `close_pr` | | `true` | Close an open PR for the development branch |
-| `close_issue` | | `true` | Close issue(s) linked to the PR or prefixed in the branch name |
+| Input                 | Required | Default | Description                                                     |
+| --------------------- | -------- | ------- | --------------------------------------------------------------- |
+| `token`               | ✅       | –       | PAT with `contents`, `issues`, and `pull-requests` write access |
+| `user_name`           | ✅       | –       | Git user name for merge commits                                 |
+| `user_email`          | ✅       | –       | Git user email for merge commits                                |
+| `target_branch`       |          | `main`  | Branch to fast-forward merge into                               |
+| `delete_dev_branch`   |          | `true`  | Delete the development branch after delivery                    |
+| `delete_ready_branch` |          | `true`  | Delete the `ready/*` branch after delivery                      |
+| `close_pr`            |          | `true`  | Close an open PR for the development branch                     |
+| `close_issue`         |          | `true`  | Close issue(s) linked to the PR or prefixed in the branch name  |
 
 ## Built-in workflow
 

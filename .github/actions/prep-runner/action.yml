@@ -1,0 +1,15 @@
+name: Prep-runner
+description: Sets the GitHub workflow to do what we need
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: "20"
+    # Install npm packages required by .githooks/pre-commit
+    # These are CRITICAL for validation to pass
+    - name: Install Node.js linting tools
+      shell: bash
+      run: npm install -g cspell markdownlint-cli2 @cspell/dict-da-dk prettier
