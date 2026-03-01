@@ -16,9 +16,6 @@ on:
         type: string
 
 jobs:
-  build:
-    steps:
-
   release:
     runs-on: ubuntu-latest
     permissions:
