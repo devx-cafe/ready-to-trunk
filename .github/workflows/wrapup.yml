@@ -33,7 +33,5 @@ jobs:
         uses: ./.github/actions/prep-runner 
 
       - name: Test trunk worthyness - mark statusses
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./.scripts/trunk-worthy  
   

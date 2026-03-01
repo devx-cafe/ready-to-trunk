@@ -17,11 +17,6 @@ inputs:
     required: false
     type: string
     default: "ready-pusher@${{ github.repository_owner }}.github.com"
-  token:
-    description: "GitHub token for gh CLI operations, needs write permissions for contents/issues/pull-requests Defaults to ${{ secrets.GITHUB_TOKEN }}"
-    required: false
-    type: string
-    default: ${{ secrets.GITHUB_TOKEN }}
   delete_dev_branch:
     description: "Whether to delete the original development branch after delivery"
     required: false
@@ -56,6 +51,5 @@ runs:
         INPUT_DELETE_READY_BRANCH: ${{ inputs.delete_ready_branch }}
         INPUT_CLOSE_PR: ${{ inputs.close_pr }}
         INPUT_CLOSE_ISSUE: ${{ inputs.close_issue }}
-        GH_TOKEN: ${{ inputs.token }}
       shell: bash
       run: ${{ github.action_path }}/ready-to-trunk.ah
