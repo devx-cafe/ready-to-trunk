@@ -59,7 +59,7 @@ jobs:
             echo "Release type: STABLE"
           fi
 
-      - name version.txt
+      - name: version.txt
         run: |
           mkdir -p .tmp
           echo "Build from ${{ github.repository }}" > .tmp/version.txt
