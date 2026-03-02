@@ -78,14 +78,14 @@ jobs:
         run: |
           mkdir -p .tmp/release
           TAG="${{ github.event.inputs.tag || github.ref_name }}"
-          tar -czf ".tmp/release/takt-actions-${TAG}.tar.gz" -C .tmp/release .
+          tar -czf ".tmp/takt-actions-${TAG}.tar.gz" -C .tmp/release .
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.event.inputs.tag || github.ref_name }}
           files: |
-            ./.tmp/release/takt-actions-${{ github.event.inputs.tag || github.ref_name }}.tar.gz
+            ./.tmp/takt-actions-${{ github.event.inputs.tag || github.ref_name }}.tar.gz
             ./.tmp/release/version.txt
           body_path: .tmp/release/RELEASENOTES.md
           draft: ${{ steps.release_type.outputs.is_draft }}
