@@ -28,17 +28,6 @@ jobs:
           fetch-depth: 0   # Fetch full history (needed for release notes generation)
           fetch-tags: true # Ensure tags are fetched (needed for release notes generation)
 
-      - name: Create release notes
-        id: release_notes
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: |
-          gh ext install devx-cafe/gh-tt
-          mkdir -p .tmp
-          gh tt semver note --filename .tmp/RELEASENOTES.md
-          echo "Generating release notes..."
-          cat .tmp/RELEASENOTES.md >> $GITHUB_STEP_SUMMARY
-
       - name: Determine release type
         id: release_type
         run: |
@@ -59,25 +48,39 @@ jobs:
             echo "Release type: STABLE"
           fi
 
+      - name: Create release notes
+        id: release_notes
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          gh ext install devx-cafe/gh-tt
+          mkdir -p .tmp/release
+          gh tt semver note --filename .tmp/release/RELEASENOTES.md
+          echo "Generating release notes..."
+          cat .tmp/release/RELEASENOTES.md >> $GITHUB_STEP_SUMMARY
+          
+      - name: collect artifacts
+        run: |
+          mkdir -p .tmp/release
+          cp ./README.md .tmp/release/
+          cp -r ./pr-to-ready/ .tmp/release/
+          cp -r ./ready-to-trunk/ .tmp/release/
+          cp -r ./actionhelpers/ .tmp/release/
+          
       - name: version.txt
         run: |
-          mkdir -p .tmp
-          echo "Build from ${{ github.repository }}" > .tmp/version.txt
-          echo "Tag: ${{ github.ref_name }}" >> .tmp/version.txt
-          echo "Commit: ${{ github.sha }}" >> .tmp/version.txt
+          mkdir -p .tmp/release
+          echo "Build from ${{ github.repository }}" > .tmp/release/version.txt
+          echo "Tag: ${{ github.ref_name }}" >> .tmp/release/version.txt
+          echo "Commit: ${{ github.sha }}" >> .tmp/release/version.txt
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.event.inputs.tag || github.ref_name }}
           files: |
-            ./actionhelpers/**/*
-            ./pr-to-ready/**/*
-            ./ready-to-trunk/**/*
-            ./.tmp/version.txt
-            ./.tmp/RELEASENOTES.md
-            ./README.md 
-          body_path: .tmp/RELEASENOTES.md
+            ./.tmp/release/**/*
+          body_path: .tmp/release/RELEASENOTES.md
           draft: ${{ steps.release_type.outputs.is_draft }}
           prerelease: ${{ steps.release_type.outputs.is_prerelease }}
           token: ${{ secrets.GITHUB_TOKEN }}
