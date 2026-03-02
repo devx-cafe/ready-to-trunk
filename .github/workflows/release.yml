@@ -71,9 +71,9 @@ jobs:
         with:
           tag_name: ${{ github.event.inputs.tag || github.ref_name }}
           files: |
-            ./actiohelpers/*
-            ./pr-to-ready/*
-            ./ready-to-trunk/*
+            ./actionhelpers/**/*
+            ./pr-to-ready/**/*
+            ./ready-to-trunk/**/*
             ./.tmp/version.txt
             ./.tmp/RELEASENOTES.md
             ./README.md 
